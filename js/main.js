@@ -1,44 +1,57 @@
 require.config({
     paths : {
         "jquery" : "jquery1.11.3.min",
-        "jqueryUI":"jquery-ui.min"
+        "jqueryUI":"jquery-ui.min",
+        "widget":"components/widget",
+        "template":"template-web"
     }
 })
 
 require(['jquery','window'],function($,w){
-    var win = new w.Window();
+    
     $("#a").click(function(){
-        win.alert({
-            content:'welcome!!',
+        var win = new w.Window();
+        // win.alert({
+        //     content:'welcome!!',
+        //     width:300,
+        //     height:150,
+        //     y:50,
+        //     hasCloseBtn:true,
+        //     skinClassName:'window_skin_b',
+        //     title:'提示',
+        //     text4AlertBtn:'确定?',
+        //     handler4AlertBtn:function(){
+        //         alert("you click the alert button");
+        //     },
+        //     handler4CloseBtn:function(){
+        //         alert("you click the close button");
+        //     }
+        // });
+        win.confirm({
+            content:'你确定要删除这个文件吗？',
             width:300,
             height:150,
             y:50,
             hasCloseBtn:true,
             skinClassName:'window_skin_b',
             title:'提示',
-            text4AlertBtn:'确定?'
-            // handler4AlertBtn:function(){
-            //     alert("you click the alert button");
-            // },
-            // handler4CloseBtn:function(){
-            //     alert("you click the close button");
-            // }
+            text4ConfirmBtn:'是',
+            text4CancelBtn:'否'
+        }).on("confirm",function(){
+            alert("确定");
+        }).on("cancel",function(){
+            alert("取消");
         });
+        // win.on("cancel",function(){
+        //     alert('cancel!!!~~~');
+        // });
+        // win.on("alert",function(){
+        //     alert("the second alert button");
+        // }).on("alert",function(){
+        //     alert("the third alert button");
+        // }).on("close",function(){
+        //     alert("the second close button");
+        // });
     });
-    win.on("alert",function(){
-        alert("the second alert button");
-    }).on("alert",function(){
-        alert("the third alert button");
-    }).on("close",function(){
-        alert("the second close button");
-    });
-    // win.on("alert",function(){
-    //     alert("the second alert button");
-    // });
-    // win.on("alert",function(){
-    //     alert("the third alert button");
-    // });
-    // win.on("close",function(){
-    //     alert("the second close button");
-    // });
+    
 });

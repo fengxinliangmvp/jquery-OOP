@@ -26,6 +26,7 @@ html,body{
     left: 50%;
     margin-left: -50px;
 }
+
 .window_skin_a .window_body{
     padding:10px;
 }
@@ -67,4 +68,16 @@ html,body{
     background:blue;
     color:#fff;
     cursor: pointer;
+}
+
+.window_skin_b .window_footer{
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 10px;
+    text-align: center;
+    width:100%;
+}
+
+.window_skin_b .window_cancelBtn{
+    margin-left: 20px;
 }
