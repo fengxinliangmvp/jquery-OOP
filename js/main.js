@@ -6,27 +6,36 @@ require.config({
         "template":"template-web"
     }
 })
-
 require(['jquery','window'],function($,w){
-    
+    $("#b").click(function(){
+        var win = new w.Window();
+        win.list = {
+            dataList:["kobe","james","dt","hd","ss"]
+        }
+        win.alert({
+            content:'welcome!!',
+            width:300,
+            height:150,
+            y:50,
+            hasCloseBtn:true,
+            skinClassName:'window_skin_b',
+            title:'提示',
+            text4AlertBtn:'确定?',
+            handler4AlertBtn:function(){
+                alert("you click the alert button");
+            },
+            handler4CloseBtn:function(){
+                alert("you click the close button");
+            }
+        });
+       
+        console.log(win.list);
+        window.win = win;
+    });
     $("#a").click(function(){
         var win = new w.Window();
-        // win.alert({
-        //     content:'welcome!!',
-        //     width:300,
-        //     height:150,
-        //     y:50,
-        //     hasCloseBtn:true,
-        //     skinClassName:'window_skin_b',
-        //     title:'提示',
-        //     text4AlertBtn:'确定?',
-        //     handler4AlertBtn:function(){
-        //         alert("you click the alert button");
-        //     },
-        //     handler4CloseBtn:function(){
-        //         alert("you click the close button");
-        //     }
-        // });
+        console.log(win);
+        
         win.confirm({
             content:'你确定要删除这个文件吗？',
             width:300,
@@ -42,6 +51,7 @@ require(['jquery','window'],function($,w){
         }).on("cancel",function(){
             alert("取消");
         });
+        window.win = win;
         // win.on("cancel",function(){
         //     alert('cancel!!!~~~');
         // });

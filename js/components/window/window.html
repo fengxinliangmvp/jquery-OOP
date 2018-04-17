@@ -1,0 +1,19 @@
+<div class="window_boundingBox">
+    <div class="window_header">{{cfg.title}}</div>
+    {{if cfg.hasCloseBtn}}
+    <span class="window_closeBtn">X</span>
+    {{/if}} {{each list.dataList value i}}
+    <div class="hide_{{cfg.random}}_{{i}}_{{value}}" onclick="win.showMe('{{value}}')">
+        {{value}}
+    </div>
+    {{/each}}
+    <div class="window_body">{{cfg.content}}</div>
+    <div class="window_footer">
+        {{if cfg.winType === 'alert'}}
+            <input type="button" class="window_alertBtn" value="{{cfg.text4AlertBtn}}"> 
+        {{else if cfg.winType === 'confirm'}}
+            <input type="button" class="window_confirmBtn" value="{{cfg.text4ConfirmBtn}}">
+            <input type="button" class="window_cancelBtn" value="{{cfg.text4CancelBtn}}"> 
+        {{/if}}
+    </div>
+</div>

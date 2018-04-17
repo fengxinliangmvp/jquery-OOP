@@ -1,4 +1,4 @@
-define(['widget', 'jquery', 'jqueryUI', 'template'], function (widget, $, $UI, template) {
+define(['widget', 'jquery', 'text!components/window/window.html','template'], function (widget, $, header,template) {
     function Window() {
         this.cfg = {
             winType: null,
@@ -16,9 +16,10 @@ define(['widget', 'jquery', 'jqueryUI', 'template'], function (widget, $, $UI, t
             handler: null,
             skinClassName: null,
             hasMask: true,
-            isDraggable: true
+            isDraggable: true,
+            random:Math.floor(Math.random()*1000)
         };
-        this.list = ["a","b","c"]
+        this.list = { dataList: ["a", "b", "c"] }
     }
 
     Window.prototype = $.extend({}, new widget.Widget(), {
@@ -26,39 +27,12 @@ define(['widget', 'jquery', 'jqueryUI', 'template'], function (widget, $, $UI, t
             alert(content || 'sss');
         },
         renderUI: function () {
-            var footerContent = '';
-            switch (this.cfg.winType) {
-                case 'alert':
-                    footerContent = 
-                    '<input type="button" class="window_alertBtn" value="' + this.cfg.text4AlertBtn + '">';
-                    break;
-                case 'confirm':
-                    footerContent = '<input type="button" class="window_confirmBtn" value="' + this.cfg.text4ConfirmBtn + '">' +
-                        '<input type="button" class="window_cancelBtn" value="' + this.cfg.text4CancelBtn + '">';
-                    break;
-                default:
-                    break;
-            }
-            var showMe = this.showMe;
-
-            var boundingBox = 
-            '<div class="window_boundingBox">' +
-                '<div class="window_header">' + this.cfg.title + '</div>';
-            for (let index = 0; index < this.list.length; index++) {
-                var random = Math.floor(Math.random() * 1000);
-                boundingBox += '<div class="fxlmvp_' + random + '" >' + index + '</div>'
-            }
-            boundingBox += '<div class="window_body">' + this.cfg.content + '</div>' +
-                '<div class="window_footer">' + footerContent + '</div>';
-            '</div>';
-            this.boundingBox = $(boundingBox);
-            console.log(this.boundingBox);
+            var render = template.compile(header);
+            var html = render(this);
+            this.boundingBox = $(html);
             if (this.cfg.hasMask) {
                 this._mask = $('<div class="window_mask"></div>');
                 this._mask.appendTo("body");
-            }
-            if (this.cfg.hasCloseBtn) {
-                this.boundingBox.append('<span class="window_closeBtn">X</span>');
             }
             this.boundingBox.appendTo(document.body);
         },
@@ -80,7 +54,7 @@ define(['widget', 'jquery', 'jqueryUI', 'template'], function (widget, $, $UI, t
                 // that.showMe(event.target.className);
                 var className = event.target.className;
                 console.log();
-                
+
                 // $('.'+className).html(className);
                 that.showMe(className);
                 // console.log($('.'+className));
@@ -101,9 +75,6 @@ define(['widget', 'jquery', 'jqueryUI', 'template'], function (widget, $, $UI, t
             });
             if (this.cfg.skinClassName) {
                 this.boundingBox.addClass(this.cfg.skinClassName);
-            }
-            if (this.cfg.isDraggable) {
-                this.boundingBox.draggable();
             }
         },
         destructor: function () {
